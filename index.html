@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FixError - Hệ Thống Tra Cứu Mã Lỗi Thiết Bị Điện Lạnh Chuyên Nghiệp</title>
+    <meta name="description"
+        content="Tra cứu nhanh chóng, chính xác mã lỗi máy giặt, điều hòa, tủ lạnh các hãng Electrolux, Daikin, Toshiba... Hướng dẫn sửa chữa chi tiết tại nhà.">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="data:image/png+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA1MTIgNTEyJyBmaWxsPScjMDZCNkQ0Jz48cGF0aCBkPSdNNDk2IDI0MGgtODEuODFsNTYuODgtNTYuODhjOS4zNy05LjM3IDkuMzctMjQuNTcgMC0zMy45NHMtMjQuNTctOS4zNy0zMy45NCAwTDM4MC4yNSAyMDYuMSAzMDYgMTMxLjgxVjQ4YzAtMTMuMjUtMTAuNzUtMjQtMjQtMjRzLTI0IDEwLjc1LTI0IDI0djgzLjgxTDE4My44MSA1Ni44OGMtOS4zNy05LjM3LTI0LjU3LTkuMzctMzMuOTQgMHMtOS4zNyAyNC41NyAwIDMzLjk0TDIwNi4xIDE0Ny43NSAxMzEuODEgMjIySDQ4Yy0xMy4yNSAwLTI0IDEwLjc1LTI0IDI0czEwLjc1IDI0IDI0IDI0aDgzLjgxbC01Ni44OCA1Ni44OGMtOS4zNyA5LjM3LTkuMzctMjQuNTcgMCAzMy45NCA5LjM3IDkuMzctMjQuNTcgOS4zNyAzMy45NCAwTDE4My44IDMyMS43NWw3NC4yIDc0LjI1VjQ4MGMwIDEzLjI1IDEwLjc1IDI0IDI0IDI0cyI0LTEwLjc1I0QtMjR2LTgzLjgxbDc0LjE5IDc0LjE5YzkuMzcgOS4zNyAyOC41NyA5LjM3IDMzLjk0IDBzOS4zNy0yNC41NyAwLTMzLjk0TDMyMS45IDM4MC4yNSAzOTYuMTkgMzA2SDQ4MGMxMy4yNSAwLTI0LTEwLjc1LTI0LTI0cy0xMC43NS0yNC0yNC0yNHptLTE0NCAxNmMwIDUzLjAyLTQyLjk4IDk2LTk2IDk2cy05Ni00Mi45OC05Ni05NiA0Mi45OC05NiA5Ni05NiA5NiA0Mi45OCA5NiA5NnondS8+PC9zdmc+">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* CSS RESET & VARIABLES */
+        :root {
+            --bg-primary: #0B0F19;
+            --bg-secondary: #111827;
+            --bg-card: rgba(17, 24, 39, 0.7);
+            --border-color: rgba(255, 255, 255, 0.08);
+
+            --primary: #2563EB;
+            --primary-glow: rgba(37, 99, 235, 0.15);
+            --accent: #06B6D4;
+            --accent-glow: rgba(6, 182, 212, 0.2);
+
+            --text-primary: #F9FAFB;
+            --text-secondary: #9CA3AF;
+            --text-muted: #6B7280;
+
+            --success: #10B981;
+            --warning: #F59E0B;
+            --error: #EF4444;
+
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.08) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+
+        /* SCROLLBAR */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        /* HEADER & NAVIGATION */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(11, 15, 25, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .logo i {
+            color: var(--accent);
+            filter: drop-shadow(0 0 8px var(--accent-glow));
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-premium {
+            background: linear-gradient(135deg, var(--primary) 0%, #1D4ED8 100%);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px var(--primary-glow);
+            text-decoration: none;
+        }
+
+        .btn-premium:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        /* HERO SECTION */
+        .hero {
+            padding: 5rem 2rem 3rem;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .badge-hero {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(37, 99, 235, 0.1);
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            color: var(--accent);
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, #3B82F6 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--text-secondary);
+            font-size: 1.15rem;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+            animation: fadeInUp 0.8s ease 0.1s;
+            animation-fill-mode: both;
+        }
+
+        /* SEARCH CONTAINER & FILTERS */
+        .search-area {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .search-wrapper {
+            position: relative;
+            background: rgba(17, 24, 37, 0.6);
+            border: 1px solid var(--border-color);
+            padding: 8px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .search-wrapper:focus-within {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.15), 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .search-icon {
+            padding: 0 1.25rem;
+            color: var(--accent);
+            font-size: 1.35rem;
+        }
+
+        .search-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-primary);
+            font-size: 1.15rem;
+            font-family: var(--font-main);
+            padding: 12px 0;
+        }
+
+        .search-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-stats {
+            position: absolute;
+            right: 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        /* FILTERS ROW */
+        .filter-section {
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .filter-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .filter-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            margin-right: 8px;
+        }
+
+        .chip {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .chip:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-primary);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .chip.active {
+            background: rgba(37, 99, 235, 0.15);
+            border-color: var(--primary);
+            color: #60A5FA;
+        }
+
+        /* RESULTS SECTION */
+        .results-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            width: 100%;
+            flex-grow: 1;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: var(--accent);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* CARD STYLING */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary);
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(6, 182, 212, 0.3);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .card:hover::before {
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .brand-badge {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .brand-electrolux {
+            color: #FF9F1C;
+            border-color: rgba(255, 159, 28, 0.2);
+            background: rgba(255, 159, 28, 0.05);
+        }
+
+        .brand-daikin {
+            color: #00B4D8;
+            border-color: rgba(0, 180, 216, 0.2);
+            background: rgba(0, 180, 216, 0.05);
+        }
+
+        .brand-toshiba {
+            color: #E63946;
+            border-color: rgba(230, 57, 70, 0.2);
+            background: rgba(230, 57, 70, 0.05);
+        }
+
+        .brand-panasonic {
+            color: #A78BFA;
+            border-color: rgba(167, 139, 250, 0.2);
+            background: rgba(167, 139, 250, 0.05);
+        }
+
+        .brand-lg {
+            color: #EC4899;
+            border-color: rgba(236, 72, 153, 0.2);
+            background: rgba(236, 72, 153, 0.05);
+        }
+
+        .brand-samsung {
+            color: #38BDF8;
+            border-color: rgba(56, 189, 248, 0.2);
+            background: rgba(56, 189, 248, 0.05);
+        }
+
+        .brand-aqua-sanyo {
+            color: #10B981;
+            border-color: rgba(16, 185, 129, 0.2);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .device-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .error-title-wrapper {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+
+        .error-code {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent);
+            text-shadow: 0 0 12px var(--accent-glow);
+            letter-spacing: -0.5px;
+        }
+
+        .error-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            flex-grow: 1;
+        }
+
+        .info-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .info-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .info-content {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .solution-list {
+            list-style: none;
+            padding-left: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .solution-item {
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            line-height: 1.5;
+        }
+
+        .solution-item i {
+            color: var(--success);
+            margin-top: 4px;
+            font-size: 0.85rem;
+        }
+
+        /* EMPTY STATE */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 5rem 2rem;
+            background: rgba(17, 24, 37, 0.4);
+            border: 1px dashed var(--border-color);
+            border-radius: var(--radius-md);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .empty-state i {
+            font-size: 3.5rem;
+            color: var(--text-muted);
+        }
+
+        .empty-state h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .empty-state p {
+            color: var(--text-secondary);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 2rem;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            font-weight: 800;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-logo i {
+            color: var(--accent);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .footer-link a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .footer-link a:hover {
+            color: var(--accent);
+        }
+
+        .copyright {
+            width: 100%;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* MODAL POPUPS FOR FOOTER LINKS */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(11, 15, 25, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+            padding: 1.5rem;
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            max-width: 650px;
+            width: 100%;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            padding: 2.5rem;
+            position: relative;
+            transform: scale(0.95);
+            transition: var(--transition);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal.active .modal-card {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            color: var(--text-secondary);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            background: rgba(239, 68, 68, 0.2);
+            color: #EF4444;
+        }
+
+        .modal-title {
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .modal-body {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 0.95rem;
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+
+        .modal-body p {
+            margin-bottom: 1rem;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-control {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            font-size: 0.95rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* HIGHLIGHT MATCHING TEXT */
+        .highlight {
+            background-color: rgba(253, 224, 71, 0.3);
+            color: #FDE047;
+            padding: 0 2px;
+            border-radius: 2px;
+            font-weight: 700;
+        }
+
+        /* ANIMATIONS */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 4rem 1rem 2rem;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION BAR -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fa-solid fa-snowflake"></i>
+                <span>FixError</span>
+            </a>
+            <div class="nav-actions">
+                <button class="btn-premium" onclick="openModal('contact')">
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                    Yêu Cầu Sửa Chữa
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <main>
+        <section class="hero">
+            <div class="badge-hero">
+                <i class="fa-solid fa-bolt"></i> Cập Nhật 2026: Dữ liệu chuẩn xác 100%
+            </div>
+            <h1>Tra Cứu Mã Lỗi <span>Thiết Bị Điện Lạnh</span></h1>
+            <p>Hệ thống hỗ trợ thợ kỹ thuật và người dùng tra cứu nhanh chóng nguyên nhân, cách khắc phục các mã lỗi máy
+                giặt, điều hòa, tủ lạnh tại nhà.</p>
+        </section>
+
+        <!-- SEARCH AREA -->
+        <section class="search-area">
+            <div class="search-wrapper">
+                <span class="search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+                <input type="text" id="searchInput" class="search-input"
+                    placeholder="Nhập mã lỗi hoặc tên hãng (Ví dụ: E10, Electrolux)..." autocomplete="off">
+                <span class="search-stats" id="searchStats">0 kết quả</span>
+            </div>
+
+            <!-- FILTERS -->
+            <div class="filter-section">
+                <!-- Device Filter -->
+                <div class="filter-row">
+                    <span class="filter-label">Thiết bị:</span>
+                    <button class="chip active" data-filter-type="device" data-value="all">
+                        <i class="fa-solid fa-cubes"></i> Tất cả
+                    </button>
+                    <button class="chip" data-filter-type="device" data-value="Washing Machine">
+                        <i class="fa-solid fa-soap"></i> Máy giặt
+                    </button>
+                    <button class="chip" data-filter-type="device" data-value="Air Conditioner">
+                        <i class="fa-solid fa-wind"></i> Điều hòa
+                    </button>
+                    <button class="chip" data-filter-type="device" data-value="Refrigerator">
+                        <i class="fa-solid fa-snowflake"></i> Tủ lạnh
+                    </button>
+                </div>
+                <!-- Brand Filter -->
+                <div class="filter-row">
+                    <span class="filter-label">Hãng sản xuất:</span>
+                    <button class="chip active" data-filter-type="brand" data-value="all">Tất cả</button>
+                    <button class="chip" data-filter-type="brand" data-value="Panasonic">Panasonic</button>
+                    <button class="chip" data-filter-type="brand" data-value="LG">LG</button>
+                    <button class="chip" data-filter-type="brand" data-value="Samsung">Samsung</button>
+                    <button class="chip" data-filter-type="brand" data-value="Aqua/Sanyo">Aqua/Sanyo</button>
+                    <button class="chip" data-filter-type="brand" data-value="Toshiba">Toshiba</button>
+                    <button class="chip" data-filter-type="brand" data-value="Electrolux">Electrolux</button>
+                    <button class="chip" data-filter-type="brand" data-value="Daikin">Daikin</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESULTS GRID -->
+        <section class="results-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fa-solid fa-list-check"></i>
+                    Danh Sách Kết Quả Tra Cứu
+                </h2>
+            </div>
+
+            <div class="results-grid" id="resultsGrid">
+                <!-- Cards will be populated dynamically -->
+
+                <!-- EMPTY STATE -->
+                <div class="empty-state" id="emptyState">
+                    <i class="fa-solid fa-magnifying-glass-minus"></i>
+                    <h3>Không tìm thấy mã lỗi phù hợp</h3>
+                    <p>Hãy thử tìm kiếm với từ khóa khác hoặc lọc theo danh mục hãng khác.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <a href="#" class="footer-logo">
+                <i class="fa-solid fa-snowflake"></i> FixError
+            </a>
+            <ul class="footer-links">
+                <li class="footer-link"><a onclick="openModal('about')">Giới thiệu</a></li>
+                <li class="footer-link"><a onclick="openModal('contact')">Liên hệ</a></li>
+                <li class="footer-link"><a onclick="openModal('privacy')">Chính sách bảo mật</a></li>
+            </ul>
+        </div>
+        <div class="copyright">
+            &copy; 2026 FixError Pro. Giao diện được thiết kế hiện đại & tối ưu trải nghiệm người dùng.
+        </div>
+    </footer>
+
+    <!-- MODAL POPUPS -->
+    <!-- ABOUT MODAL -->
+    <div class="modal" id="aboutModal">
+        <div class="modal-card">
+            <button class="modal-close" onclick="closeModal('about')"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="modal-title"><i class="fa-solid fa-circle-info"></i> Giới Thiệu</h3>
+            <div class="modal-body">
+                <p><strong>FixError</strong> là nền tảng tra cứu mã lỗi thiết bị điện lạnh trực tuyến số 1 tại Việt Nam.
+                    Chúng tôi cung cấp giải pháp tra cứu thông minh và tức thì giúp hỗ trợ tối đa cho đội ngũ kỹ sư, thợ
+                    sửa chữa cũng như các hộ gia đình tự chẩn đoán sự cố.</p>
+                <p>Với cơ sở dữ liệu phong phú được cập nhật liên tục từ các tài liệu hướng dẫn kỹ thuật chính hãng của
+                    Electrolux, Daikin, Toshiba..., bạn hoàn toàn có thể an tâm về độ chính xác và tính thực tiễn của
+                    giải pháp.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTACT MODAL -->
+    <div class="modal" id="contactModal">
+        <div class="modal-card">
+            <button class="modal-close" onclick="closeModal('contact')"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="modal-title"><i class="fa-solid fa-envelope"></i> Liên Hệ Hỗ Trợ</h3>
+            <div class="modal-body">
+                <p>Bạn gặp sự cố phức tạp cần chuyên viên hỗ trợ? Hãy để lại thông tin, đội ngũ kỹ thuật viên chuyên
+                    nghiệp sẽ liên hệ hỗ trợ bạn ngay lập tức.</p>
+                <form class="contact-form" onsubmit="handleContactSubmit(event)">
+                    <div class="form-group">
+                        <label class="info-label">Họ và tên</label>
+                        <input type="text" class="form-control" placeholder="Nguyễn Văn A" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="info-label">Số điện thoại</label>
+                        <input type="tel" class="form-control" placeholder="0987654321" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="info-label">Nội dung yêu cầu</label>
+                        <textarea class="form-control" rows="3"
+                            placeholder="Ví dụ: Máy giặt Electrolux nhà tôi báo lỗi E10..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-premium" style="justify-content: center; width: 100%;">
+                        Gửi Yêu Cầu Hỗ Trợ
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRIVACY MODAL -->
+    <div class="modal" id="privacyModal">
+        <div class="modal-card">
+            <button class="modal-close" onclick="closeModal('privacy')"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="modal-title"><i class="fa-solid fa-shield-halved"></i> Chính Sách Bảo Mật</h3>
+            <div class="modal-body" style="text-align: justify;">
+                <p>Chào mừng bạn đến với trang web tra cứu mã lỗi điện lạnh của chúng tôi tại địa chỉ
+                    <strong>fixloidienlanh.xyz</strong>. Chúng tôi rất coi trọng quyền riêng tư của bạn. Chính sách bảo
+                    mật này giải thích cách chúng tôi thu thập, sử dụng và bảo vệ thông tin của bạn khi bạn truy cập
+                    trang web.</p>
+
+                <h4 style="color: var(--accent); margin: 1.5rem 0 0.5rem 0; font-size: 1.1rem;"><i
+                        class="fa-solid fa-cookie"></i> 1. Tệp Cookie và Các Công Nghệ Theo Dõi</h4>
+                <p>Chúng tôi sử dụng tệp cookie để nâng cao trải nghiệm người dùng, phân tích lưu lượng truy cập và phục
+                    vụ quảng cáo đích cá nhân hóa. Cookie là các tệp nhỏ được lưu trữ trên thiết bị của bạn.</p>
+
+                <h4 style="color: var(--accent); margin: 1.5rem 0 0.5rem 0; font-size: 1.1rem;"><i
+                        class="fa-solid fa-rectangle-ad"></i> 2. Quảng Cáo Google AdSense và Cookie DoubleClick DART
+                </h4>
+                <p>Google, với tư cách là nhà cung cấp bên thứ ba trên trang web của chúng tôi, sử dụng cookie để phân
+                    phát quảng cáo. Việc Google sử dụng cookie DART cho phép Google phân phát quảng cáo dựa trên lượt
+                    truy cập của người dùng vào trang web của chúng tôi và các trang web khác trên Internet.</p>
+                <p>Bạn có thể chọn không sử dụng cookie DART bằng cách truy cập chính sách bảo mật của mạng quảng cáo và
+                    nội dung của Google tại URL sau: <a href="https://policies.google.com/technologies/ads"
+                        target="_blank"
+                        style="color: var(--accent); text-decoration: underline;">https://policies.google.com/technologies/ads</a>.
+                </p>
+
+                <h4 style="color: var(--accent); margin: 1.5rem 0 0.5rem 0; font-size: 1.1rem;"><i
+                        class="fa-solid fa-chart-line"></i> 3. Google Analytics</h4>
+                <p>Chúng tôi sử dụng Google Analytics, một dịch vụ phân tích web được cung cấp bởi Google, Inc. Dịch vụ
+                    này giúp chúng tôi hiểu cách khách truy cập tương tác với trang web để cải thiện nội dung. Google
+                    Analytics sử dụng cookie để thu thập thông tin ẩn danh (bao gồm địa chỉ IP của bạn) và lưu trữ trên
+                    máy chủ của Google tại Hoa Kỳ.</p>
+
+                <h4 style="color: var(--accent); margin: 1.5rem 0 0.5rem 0; font-size: 1.1rem;"><i
+                        class="fa-solid fa-user-shield"></i> 4. Thu Thập Thông Tin Cá Nhân</h4>
+                <p>Khi bạn sử dụng tính năng "Yêu cầu sửa chữa" để liên hệ với chúng tôi, hệ thống sẽ thu thập thông tin
+                    do bạn tự nguyện cung cấp bao gồm: Họ tên, Số điện thoại và Nội dung mô tả sự cố. Chúng tôi cam kết
+                    chỉ sử dụng thông tin này để tư vấn kỹ thuật và không chia sẻ cho bất kỳ bên thứ ba nào vì mục đích
+                    thương mại.</p>
+
+                <h4 style="color: var(--accent); margin: 1.5rem 0 0.5rem 0; font-size: 1.1rem;"><i
+                        class="fa-solid fa-lock"></i> 5. Bảo Mật Dữ Liệu</h4>
+                <p>Trang web sử dụng giao thức bảo mật mã hóa SSL (HTTPS) để bảo vệ toàn vẹn thông tin truyền tải giữa
+                    trình duyệt của người dùng và hệ thống máy chủ của chúng tôi khỏi các truy cập trái phép.</p>
+
+                <h4 style="color: var(--accent); margin: 1.5rem 0 0.5rem 0; font-size: 1.1rem;"><i
+                        class="fa-solid fa-pen-to-square"></i> 6. Thay Đổi Chính Sách</h4>
+                <p>Chúng tôi giữ quyền cập nhật chính sách bảo mật này bất cứ lúc nào. Các thay đổi sẽ có hiệu lực ngay
+                    khi được đăng tải trên trang này. Bạn nên thường xuyên kiểm tra trang này để cập nhật các thay đổi
+                    mới nhất.</p>
+
+                <h4 style="color: var(--accent); margin: 1.5rem 0 0.5rem 0; font-size: 1.1rem;"><i
+                        class="fa-solid fa-envelope"></i> 7. Thông Tin Liên Hệ</h4>
+                <p>Nếu bạn có bất kỳ câu hỏi nào liên quan đến Chính sách bảo mật này, vui lòng liên hệ với ban quản trị
+                    qua email: <strong>hotro.fixerror@gmail.com</strong>.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // 1. DATA RESOURCE
+        const errorData = [
+            // ==========================================
+            // PANASONIC
+            // ==========================================
+            {
+                hang: "Panasonic",
+                thietBi: "Điều hòa",
+                maLoi: "H11",
+                nguyenNhan: "Lỗi giao tiếp truyền tín hiệu giữa dàn lạnh (trong nhà) và dàn nóng (ngoài trời).",
+                cachSua: "1. Kiểm tra dây điện liên kết giữa dàn nóng và dàn lạnh xem có bị đứt (do chuột cắn) hoặc đấu sai cực không. 2. Làm sạch các đầu nối dây điện bị oxy hóa. 3. Nếu dây tốt, có thể bo mạch dàn nóng hoặc lạnh đang bị hỏng nguồn giao tiếp."
+            },
+            {
+                hang: "Panasonic",
+                thietBi: "Máy giặt",
+                maLoi: "U11",
+                nguyenNhan: "Máy giặt không thể thoát được nước thải ra ngoài sau chu trình giặt.",
+                cachSua: "1. Kiểm tra đường ống xả nước xem có bị gập, tắc nghẽn hoặc đặt quá cao so với mặt sàn không. 2. Tháo lưới lọc cặn của bơm xả ra vệ sinh. 3. Kiểm tra van xả hoặc motor xả xem có bị kẹt dị vật (tiền xu, kẹp tóc...) hay bị cháy cuộn dây không."
+            },
+            {
+                hang: "Panasonic",
+                thietBi: "Máy giặt",
+                maLoi: "U12",
+                nguyenNhan: "Nắp máy giặt chưa được đóng kín khi máy chuyển sang chế độ vắt hoặc hỏng công tắc cửa.",
+                cachSua: "1. Kiểm tra xem nắp máy giặt đã được đóng chặt chưa, có bị kẹt quần áo không. 2. Kiểm tra công tắc cửa phía sau máy (tiếp điểm có bị rỉ sét hoặc gãy không). 3. Với các máy đời mới, kiểm tra nam châm từ ở mép nắp cửa xem có bị rơi mất không."
+            },
+            {
+                hang: "Panasonic",
+                thietBi: "Máy giặt",
+                maLoi: "U13",
+                nguyenNhan: "Lỗi mất cân bằng lồng giặt. Quần áo bị dồn về một phía khiến máy rung lắc mạnh khi vắt.",
+                cachSua: "1. Tạm dừng máy, mở nắp ra và phân bố đều quần áo lại khắp lồng giặt. 2. Kiểm tra xem máy giặt có bị đặt nghiêng, bập bênh chân đế không (điều chỉnh lại chân máy cho thăng bằng). 3. Kiểm tra 4 thụt (ty treo lồng) xem có bị hỏng hoặc mất độ đàn hồi không."
+            },
+            {
+                hang: "Panasonic",
+                thietBi: "Tủ lạnh",
+                maLoi: "H21",
+                nguyenNhan: "Lỗi hệ thống làm đá tự động hoặc motor đổ đá bị kẹt.",
+                cachSua: "1. Kiểm tra khay làm đá tự động xem có bị kẹt đá cũ hoặc bị nứt vỡ không. 2. Kiểm tra xem bình chứa nước làm đá có còn nước không và ống dẫn nước có bị đông đá làm tắc không. 3. Rút điện tủ lạnh 30 phút để xả tuyết tự nhiên rồi cắm lại xem hệ thống tự reset không."
+            },
+            {
+                hang: "Panasonic",
+                thietBi: "Tủ lạnh",
+                maLoi: "H14",
+                nguyenNhan: "Lỗi quạt gió ngăn đông không quay hoặc mạch điều khiển quạt bị lỗi.",
+                cachSua: "1. Tháo tấm ốp ngăn đá để kiểm tra quạt có bị bám đá dày đặc làm kẹt cánh không. 2. Dùng tay quay nhẹ cánh quạt xem có trơn tru không hay bị cháy cuộn dây. 3. Rút điện tủ xả tuyết 24h để làm sạch tuyết bám kẹt trong đường gió rồi cắm chạy lại."
+            },
+
+            // ==========================================
+            // LG
+            // ==========================================
+            {
+                hang: "LG",
+                thietBi: "Máy giặt",
+                maLoi: "IE",
+                nguyenNhan: "Nước không cấp vào máy giặt hoặc cấp quá chậm trong thời gian quy định.",
+                cachSua: "1. Kiểm tra bể chứa nước xem còn nước không, van khóa vòi nước đã mở chưa. 2. Khóa nước, tháo dây cấp và vệ sinh tấm lưới lọc cặn ở đầu van cấp nước vào máy giặt. 3. Kiểm tra van điện từ cấp nước xem có rung khi hoạt động không (nếu không rung là hỏng cuộn từ)."
+            },
+            {
+                hang: "LG",
+                thietBi: "Máy giặt",
+                maLoi: "OE",
+                nguyenNhan: "Nước trong lồng giặt không thoát được ra ngoài.",
+                cachSua: "1. Kiểm tra ống xả nước xem có bị uốn cong, dập nát hay cắm sâu xuống cống gây tắc không. 2. Mở nắp bộ lọc bơm xả (ở góc dưới bên phải mặt trước máy), xoay núm lọc ra để vệ sinh hết rác và sơ vải kẹt bên trong."
+            },
+            {
+                hang: "LG",
+                thietBi: "Máy giặt",
+                maLoi: "dE",
+                nguyenNhan: "Cánh cửa máy giặt chưa đóng chặt hoặc lỗi công tắc khóa cửa chính.",
+                cachSua: "1. Đóng mạnh tay lại cánh cửa máy giặt. 2. Kiểm tra xem tay nắm cửa có bị hỏng chốt gài không. 3. Nếu cửa đã khít mà vẫn báo lỗi, cần thay thế bộ khóa cửa điện từ chính hãng."
+            },
+            {
+                hang: "LG",
+                thietBi: "Điều hòa",
+                maLoi: "CH05",
+                nguyenNhan: "Lỗi mất kết nối giao tiếp tín hiệu giữa dàn nóng ngoài trời và dàn lạnh trong nhà.",
+                cachSua: "1. Tắt aptomat điều hòa khoảng 3 phút rồi bật lại để reset vi xử lý. 2. Kiểm tra đường dây tín hiệu nối giữa 2 dàn xem có bị mối mọt đứt hay đấu nhầm dây 1-2-3 không. 3. Kiểm tra xem có nguồn điện cấp ra dàn nóng không."
+            },
+            {
+                hang: "LG",
+                thietBi: "Điều hòa",
+                maLoi: "CH02",
+                nguyenNhan: "Lỗi cảm biến nhiệt độ dàn lạnh (cảm biến đồng cảm nhận nhiệt độ gas lạnh).",
+                cachSua: "1. Tháo vỏ dàn lạnh, tìm đầu cảm biến bằng đồng cắm ở dàn ống. 2. Kiểm tra dây cảm biến có bị chuột cắn đứt không. 3. Dùng đồng hồ đo ôm (ohm) để đo trị số cảm biến (thường khoảng 5k - 10k ohm), nếu hỏng trị số hoặc đứt thì thay cảm biến mới."
+            },
+            {
+                hang: "LG",
+                thietBi: "Tủ lạnh",
+                maLoi: "Er dH",
+                nguyenNhan: "Lỗi hệ thống xả đá tự động (xả tuyết). Bộ sấy nhiệt không hoạt động để làm tan băng ngăn đông.",
+                cachSua: "1. Rút điện tủ lạnh xả tuyết thủ công trong 12-24 giờ. 2. Kiểm tra cảm biến âm (sò lạnh), cầu chì nhiệt (fuse) bảo vệ sấy xem có bị đứt không. 3. Đo điện trở của thanh sấy thủy tinh dưới dàn lạnh xem có bị nứt hoặc cháy đứt dây không."
+            },
+
+            // ==========================================
+            // SAMSUNG
+            // ==========================================
+            {
+                hang: "Samsung",
+                thietBi: "Máy giặt",
+                maLoi: "4C",
+                nguyenNhan: "Lỗi nước không được cấp vào máy giặt hoặc áp lực nước quá yếu.",
+                cachSua: "1. Kiểm tra xem vòi cấp nước đã được mở hết cỡ chưa. 2. Vệ sinh lưới lọc kim loại tại giắc nối ống cấp nước vào máy giặt vì lâu ngày cặn bẩn bám kín. 3. Lắp thêm bơm tăng áp nếu nguồn nước từ bể chứa xuống máy giặt quá thấp."
+            },
+            {
+                hang: "Samsung",
+                thietBi: "Máy giặt",
+                maLoi: "5C",
+                nguyenNhan: "Lỗi nước giặt không thoát được ra ngoài.",
+                cachSua: "1. Kiểm tra ống thoát nước có bị đè lên hoặc bị tắc nghẽn bởi rác bẩn không. 2. Mở nắp lọc cặn ở dưới đáy máy giặt để loại bỏ cặn bẩn, tóc hoặc đồng xu kẹt bên trong cánh quạt bơm xả nước."
+            },
+            {
+                hang: "Samsung",
+                thietBi: "Máy giặt",
+                maLoi: "UB",
+                nguyenNhan: "Lỗi mất cân bằng lồng giặt. Máy không thể thực hiện vắt vì quần áo bị xoắn rối dồn lệch góc.",
+                cachSua: "1. Mở nắp máy, gỡ rối quần áo và trải đều chúng ra xung quanh lồng giặt. 2. Kê lại máy giặt chắc chắn trên mặt phẳng cứng, không dùng chân đế gỗ yếu gây bập bênh khi máy quay tốc độ cao."
+            },
+            {
+                hang: "Samsung",
+                thietBi: "Điều hòa",
+                maLoi: "E101",
+                nguyenNhan: "Lỗi kết nối tín hiệu giữa cục nóng và cục lạnh (sau 2 phút bật máy không giao tiếp được).",
+                cachSua: "1. Kiểm tra cáp nguồn và cáp tín hiệu kết nối dàn nóng - dàn lạnh. 2. Rút giắc kết nối ra cắm lại chắc chắn. 3. Nếu dây tốt, khả năng cao bo mạch điều khiển của cục nóng hoặc cục lạnh đã bị hỏng linh kiện giao tiếp."
+            },
+            {
+                hang: "Samsung",
+                thietBi: "Tủ lạnh",
+                maLoi: "5E",
+                nguyenNhan: "Lỗi cảm biến nhiệt độ ngăn đá hoặc cảm biến xả đá gặp sự cố.",
+                cachSua: "1. Rút điện tủ lạnh để xả đông tự nhiên. 2. Kiểm tra giắc cắm cảm biến ở dàn lạnh ngăn đá xem có bị ẩm ướt hoặc rỉ sét không. 3. Sử dụng cảm biến tủ lạnh Samsung trị số tương đương để thay thế nếu đo kiểm thấy hỏng hóc."
+            },
+
+            // ==========================================
+            // AQUA / SANYO
+            // ==========================================
+            {
+                hang: "Aqua/Sanyo",
+                thietBi: "Máy giặt",
+                maLoi: "E1",
+                nguyenNhan: "Nguồn nước không cấp vào máy giặt trong khoảng thời gian quá 15-20 phút.",
+                cachSua: "1. Kiểm tra xem vòi nước có bị khóa không, bể chứa có bị cạn nước không. 2. Tháo lưới lọc ở đầu van cấp nước trên máy giặt ra và dùng bàn chải đánh sạch rác bám. 3. Thay van cấp nước mới nếu đo nguồn 220V cấp vào van mà van vẫn im lặng."
+            },
+            {
+                hang: "Aqua/Sanyo",
+                thietBi: "Máy giặt",
+                maLoi: "E2",
+                nguyenNhan: "Nước không xả ra ngoài lồng giặt được.",
+                cachSua: "1. Kiểm tra xem đầu ống xả nước có bị nâng cao quá 1 mét so với mặt sàn không. 2. Kiểm tra ruột gà ống xả có bị gập xoắn không. 3. Kiểm tra van xả kéo cơ học xem có bị đứt dây cáp kéo hoặc kẹt dị vật bên trong đường thoát không."
+            },
+            {
+                hang: "Aqua/Sanyo",
+                thietBi: "Máy giặt",
+                maLoi: "U3",
+                nguyenNhan: "Lỗi máy giặt bị mất cân bằng khi thực hiện vắt khô quần áo.",
+                cachSua: "1. Dừng máy, mở nắp và dàn đều quần áo bị dồn đống lệch góc lồng giặt. 2. Căn chỉnh lại 4 chân máy giặt sao cho thăng bằng tuyệt đối trên mặt sàn phẳng. 3. Đảm bảo lồng giặt không bị xệ hoặc hỏng các ty lò xo giảm chấn."
+            },
+            {
+                hang: "Aqua/Sanyo",
+                thietBi: "Điều hòa",
+                maLoi: "E1",
+                nguyenNhan: "Lỗi cảm biến nhiệt độ phòng (cảm biến gió hồi của dàn lạnh).",
+                cachSua: "1. Tháo lưới lọc bụi dàn lạnh để thấy đầu cảm biến nhiệt độ đầu nhựa đen. 2. Kiểm tra dây nối có bị đứt hay lỏng giắc cắm trên bo mạch không. 3. Thay thế cảm biến nhiệt độ phòng mới (trị số thường là 15k ohm ở nhiệt độ phòng)."
+            },
+            {
+                hang: "Aqua/Sanyo",
+                thietBi: "Tủ lạnh",
+                maLoi: "F1",
+                nguyenNhan: "Lỗi cảm biến nhiệt độ ngăn đá hoặc lỗi hệ thống mạch xả tuyết tủ lạnh.",
+                cachSua: "1. Rút điện tủ lạnh xả đông hoàn toàn trong 24 tiếng. 2. Kiểm tra trị số điện trở cảm biến ngăn đông. 3. Kiểm tra điện trở sấy cách điện và sò lạnh xem có hoạt động tốt không để thay thế."
+            },
+
+            // ==========================================
+            // TOSHIBA
+            // ==========================================
+            {
+                hang: "Toshiba",
+                thietBi: "Máy giặt",
+                maLoi: "E23",
+                nguyenNhan: "Lỗi công tắc khóa an toàn cửa máy giặt (thường gặp ở máy giặt lồng đứng cửa trên).",
+                cachSua: "1. Đảm bảo cửa máy giặt đã được đóng sát hoàn toàn. 2. Kiểm tra xem lẫy công tắc khóa ở góc sau máy có bị gãy hoặc kẹt lò xo không. 3. Đấu tắt tiếp điểm công tắc cửa nếu hỏng mạch tiếp điểm hoặc thay khóa cửa từ mới."
+            },
+            {
+                hang: "Toshiba",
+                thietBi: "Máy giặt",
+                maLoi: "E1",
+                nguyenNhan: "Lỗi đường xả nước thải. Nước thoát quá chậm hoặc không xả được nước.",
+                cachSua: "1. Kiểm tra ống xả nước xem có bị nâng cao quá mức hay bị vật nặng đè lên làm nghẹt dòng nước không. 2. Kiểm tra motor xả kéo chốt xả xem có kéo hết hành trình không. 3. Vệ sinh họng xả bên trong lồng giặt."
+            },
+            {
+                hang: "Toshiba",
+                thietBi: "Điều hòa",
+                maLoi: "H23",
+                nguyenNhan: "Lỗi cảm biến nhiệt độ dàn lạnh (cảm biến đồng gắn trên ống đồng).",
+                cachSua: "1. Tháo vỏ ốp dàn lạnh để tiếp cận đầu cảm biến ống đồng. 2. Đo kiểm tra điện trở cảm biến, thay thế cảm biến mới đúng trị số kỹ thuật của hãng Toshiba (thường là 10k ohm)."
+            },
+            {
+                hang: "Toshiba",
+                thietBi: "Tủ lạnh",
+                maLoi: "H65",
+                nguyenNhan: "Lỗi động cơ quạt gió ngăn đông. Quạt bị kẹt không quay hoặc hỏng bo mạch điều khiển quạt.",
+                cachSua: "1. Tháo tấm nhựa ngăn đá, kiểm tra xem quạt có bị bám đầy băng tuyết cản trở cánh quạt không. 2. Vệ sinh sạch tuyết, bôi trơn trục quạt hoặc thay motor quạt mới nếu cuộn dây bị cháy đứt."
+            },
+            {
+                hang: "Toshiba",
+                thietBi: "Tủ lạnh",
+                maLoi: "H55",
+                nguyenNhan: "Lỗi máy nén (Block) hoạt động quá công suất, quá dòng điện cho phép hoặc kẹt cơ block.",
+                cachSua: "1. Rút điện kiểm tra rơ-le đề nhiệt và bộ bảo vệ quá tải gắn ở hông block phía sau tủ. 2. Đo thông mạch 3 chân cắm block xem có bị chạm vỏ hoặc đứt cuộn dây không. 3. Vệ sinh giàn nóng đằng sau tủ thông thoáng để tỏa nhiệt tốt."
+            },
+
+            // ==========================================
+            // ELECTROLUX
+            // ==========================================
+            {
+                hang: "Electrolux",
+                thietBi: "Máy giặt",
+                maLoi: "E10",
+                nguyenNhan: "Nguồn nước cấp vào máy giặt quá lâu hoặc không có nước vào.",
+                cachSua: "1. Kiểm tra van khóa vòi nước và lượng nước trong bồn chứa. 2. Khóa nước, xoáy ren ống cấp ra để rút lưới lọc cặn nhựa vệ sinh sạch đất cát, rong rêu bám bẩn. 3. Đảm bảo áp lực nước cấp vào máy đủ khỏe."
+            },
+            {
+                hang: "Electrolux",
+                thietBi: "Máy giặt",
+                maLoi: "E20",
+                nguyenNhan: "Lỗi đường nước xả. Máy giặt không bơm thoát được nước ra ngoài.",
+                cachSua: "1. Kiểm tra ống dẫn xả nước xem có gập hoặc nghẽn cặn bẩn không. 2. Vặn mở nắp bầu lọc rác ở góc dưới mặt trước máy, lôi hết sơ vải, cặn bẩn, cúc áo kẹt bên trong ra vệ sinh sạch sẽ."
+            },
+            {
+                hang: "Electrolux",
+                thietBi: "Máy giặt",
+                maLoi: "E40",
+                nguyenNhan: "Cửa máy giặt chưa được đóng kín hoặc hỏng công tắc khóa cửa điện từ.",
+                cachSua: "1. Đóng mạnh tay lại cánh cửa máy giặt để khóa chốt ngậm chặt. 2. Kiểm tra xem vòng cao su cửa có bị phồng đè chặn cửa không. 3. Thay công tắc cửa điện từ mới nếu bo mạch vẫn báo lỗi dù đã đóng khít cửa."
+            },
+            {
+                hang: "Electrolux",
+                thietBi: "Máy giặt",
+                maLoi: "E90",
+                nguyenNhan: "Lỗi kết nối truyền thông bo mạch điều khiển màn hình hiển thị và bo mạch công suất chính.",
+                cachSua: "1. Rút nguồn điện máy giặt khoảng 10 phút để reset hệ thống. 2. Kiểm tra các cáp bẹt nối giữa hai bo mạch xem có bị ẩm ướt, gián làm tổ hay đứt dây không. 3. Vệ sinh sấy khô mạch nếu bị ẩm."
+            },
+            {
+                hang: "Electrolux",
+                thietBi: "Điều hòa",
+                maLoi: "E1",
+                nguyenNhan: "Lỗi cảm biến nhiệt độ không khí phòng gặp sự cố hoặc đứt dây tín hiệu cảm biến.",
+                cachSua: "1. Kiểm tra giắc cắm cảm biến trên bo mạch điều khiển dàn lạnh xem có bị lỏng không. 2. Sử dụng đồng hồ đo điện trở cảm biến phòng xem có bị đứt hoặc sai trị số quy định không để thay thế kịp thời."
+            },
+
+            // ==========================================
+            // DAIKIN
+            // ==========================================
+            {
+                hang: "Daikin",
+                thietBi: "Điều hòa",
+                maLoi: "A6",
+                nguyenNhan: "Lỗi động cơ quạt dàn lạnh dàn lạnh trong nhà không quay hoặc quay sai tốc độ.",
+                cachSua: "1. Tắt máy dùng tay quay nhẹ cánh quạt lồng sóc xem quạt có bị kẹt cơ hay tích tụ quá nhiều bụi bẩn không. 2. Kiểm tra tụ kích quạt dàn lạnh trên mạch. 3. Thay mô-tơ quạt dàn lạnh mới nếu cuộn dây bị chập cháy."
+            },
+            {
+                hang: "Daikin",
+                thietBi: "Điều hòa",
+                maLoi: "U4",
+                nguyenNhan: "Lỗi mất tín hiệu truyền dẫn thông tin giữa dàn lạnh và dàn nóng ngoài trời.",
+                cachSua: "1. Kiểm tra dây cáp điện số 3 (dây truyền tín hiệu) nối giữa dàn nóng và dàn lạnh xem có bị đứt dập hoặc đấu nhầm cực không. 2. Siết chặt lại các ốc vít đấu dây tại cầu đấu. 3. Lỗi này có thể do hỏng bo mạch dàn nóng hoặc lạnh nếu dây cáp tốt."
+            },
+            {
+                hang: "Daikin",
+                thietBi: "Điều hòa",
+                maLoi: "E7",
+                nguyenNhan: "Lỗi động cơ quạt dàn nóng (ngoài trời) quá dòng, bị kẹt cơ hoặc hư hỏng.",
+                cachSua: "1. Kiểm tra xem trước quạt dàn nóng có vật cản nào chặn gió không. 2. Dùng tay quay cánh quạt xem có trơn không hay bị kẹt bi, kẹt cơ. 3. Thay quạt dàn nóng mới nếu mô-tơ bị cháy hoặc hỏng cảm biến tốc độ quạt."
+            },
+            {
+                hang: "Daikin",
+                thietBi: "Điều hòa",
+                maLoi: "A1",
+                nguyenNhan: "Lỗi hỏng bo mạch điều khiển dàn lạnh trong nhà.",
+                cachSua: "1. Tắt aptomat tổng cấp nguồn điện cho máy điều hòa để xả điện ngưng tụ trong 5-10 phút rồi bật lại. 2. Kiểm tra xem bo mạch dàn lạnh có bị ẩm ướt, cháy nổ cầu chì hoặc chập nổ linh kiện trên bảng mạch hay không."
+            },
+            {
+                hang: "Daikin",
+                thietBi: "Điều hòa",
+                maLoi: "C9",
+                nguyenNhan: "Lỗi bộ cảm biến nhiệt độ gió hồi (cảm biến gió vào) dàn lạnh trong nhà.",
+                cachSua: "1. Tháo tấm phin lọc bụi dàn lạnh để kiểm tra xem đầu cảm biến gió hồi có bị bám đầy bụi bẩn bít kín không. 2. Đo điện trở cảm biến gió hồi và thay thế cảm biến mới đúng thông số chuẩn Daikin."
+            }
+        ];
+
+        // 2. STATE MANAGEMENT
+        let currentFilters = {
+            device: "all",
+            brand: "all",
+            query: ""
+        };
+
+        // 3. CORE SEARCH & FILTER ENGINE
+        function renderResults() {
+            const grid = document.getElementById("resultsGrid");
+            const stats = document.getElementById("searchStats");
+            const emptyState = document.getElementById("emptyState");
+
+            // Filter logic
+            const filteredData = errorData.filter(item => {
+                const itemDeviceType = item.thietBi.includes("giặt") ? "Washing Machine" :
+                    item.thietBi.includes("hòa") ? "Air Conditioner" :
+                        item.thietBi.includes("lạnh") ? "Refrigerator" : "Other";
+
+                const matchDevice = currentFilters.device === "all" || itemDeviceType === currentFilters.device;
+                const matchBrand = currentFilters.brand === "all" || item.hang.toLowerCase() === currentFilters.brand.toLowerCase();
+
+                const q = currentFilters.query.toLowerCase().trim();
+                const matchQuery = !q ||
+                    item.maLoi.toLowerCase().includes(q) ||
+                    item.hang.toLowerCase().includes(q) ||
+                    item.nguyenNhan.toLowerCase().includes(q) ||
+                    item.thietBi.toLowerCase().includes(q);
+
+                return matchDevice && matchBrand && matchQuery;
+            });
+
+            // Clear previous cards, keeping emptyState
+            const cardElements = grid.querySelectorAll(".card");
+            cardElements.forEach(card => card.remove());
+
+            // Update stats counter
+            stats.textContent = `${filteredData.length} kết quả`;
+
+            if (filteredData.length === 0) {
+                emptyState.style.display = "flex";
+                return;
+            }
+
+            emptyState.style.display = "none";
+
+            // Render matching items
+            filteredData.forEach(item => {
+                const card = document.createElement("div");
+                card.className = "card";
+
+                const highlightText = (text, search) => {
+                    if (!search.trim()) return text;
+                    const regex = new RegExp(`(${search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')})`, 'gi');
+                    return text.replace(regex, '<span class="highlight">$1</span>');
+                };
+
+                const highlightedCode = highlightText(item.maLoi, currentFilters.query);
+                const highlightedBrand = highlightText(item.hang, currentFilters.query);
+                const highlightedReason = highlightText(item.nguyenNhan, currentFilters.query);
+
+                // Build solution list dynamically by splitting cachSua
+                let solutions = [];
+                if (item.cachSua) {
+                    const parts = item.cachSua.split(/\s*\d+\.\s*/);
+                    solutions = parts.map(p => p.trim()).filter(p => p.length > 0);
+                    if (solutions.length === 0) {
+                        solutions = [item.cachSua];
+                    }
+                }
+
+                const solutionItems = solutions.map(sol => `
+                    <li class="solution-item">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span>${sol}</span>
+                    </li>
+                `).join("");
+
+                const itemDeviceType = item.thietBi.includes("giặt") ? "Washing Machine" :
+                    item.thietBi.includes("hòa") ? "Air Conditioner" :
+                        item.thietBi.includes("lạnh") ? "Refrigerator" : "Other";
+
+                const safeBrandClass = item.hang.toLowerCase().replace('/', '-');
+
+                card.innerHTML = `
+                    <div class="card-header">
+                        <span class="brand-badge brand-${safeBrandClass}">${highlightedBrand}</span>
+                        <span class="device-badge">
+                            <i class="${getDeviceIcon(itemDeviceType)}"></i>
+                            ${item.thietBi}
+                        </span>
+                    </div>
+                    <div class="error-title-wrapper">
+                        <span class="error-code">${highlightedCode}</span>
+                        <span class="error-name">Mã Lỗi</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="info-group">
+                            <span class="info-label"><i class="fa-solid fa-circle-exclamation"></i> Nguyên Nhân</span>
+                            <p class="info-content">${highlightedReason}</p>
+                        </div>
+                        <div class="info-group">
+                            <span class="info-label"><i class="fa-solid fa-screwdriver-wrench"></i> Giải Pháp Khắc Phục</span>
+                            <ul class="solution-list">
+                                ${solutionItems}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Helper icon picker
+        function getDeviceIcon(deviceType) {
+            switch (deviceType) {
+                case "Washing Machine": return "fa-solid fa-soap";
+                case "Air Conditioner": return "fa-solid fa-wind";
+                case "Refrigerator": return "fa-solid fa-snowflake";
+                default: return "fa-solid fa-cubes";
+            }
+        }
+
+        // 4. EVENT LISTENERS
+        document.addEventListener("DOMContentLoaded", () => {
+            // Instant Search Box
+            const searchInput = document.getElementById("searchInput");
+            searchInput.addEventListener("input", (e) => {
+                currentFilters.query = e.target.value;
+                renderResults();
+            });
+
+            // Filter Chips Event
+            const chips = document.querySelectorAll(".chip");
+            chips.forEach(chip => {
+                chip.addEventListener("click", () => {
+                    const filterType = chip.getAttribute("data-filter-type");
+                    const value = chip.getAttribute("data-value");
+
+                    // Deactivate sibling chips
+                    document.querySelectorAll(`.chip[data-filter-type="${filterType}"]`).forEach(sibling => {
+                        sibling.classList.remove("active");
+                    });
+
+                    // Activate current chip
+                    chip.classList.add("active");
+
+                    // Set filter state
+                    currentFilters[filterType] = value;
+
+                    // Render again
+                    renderResults();
+                });
+            });
+
+            // Initial render
+            renderResults();
+        });
+
+        // 5. MODAL SYSTEM
+        function openModal(id) {
+            document.getElementById(`${id}Modal`).classList.add("active");
+        }
+
+        function closeModal(id) {
+            document.getElementById(`${id}Modal`).classList.remove("active");
+        }
+
+        // Close on clicking outside modal card
+        window.addEventListener("click", (e) => {
+            if (e.target.classList.contains("modal")) {
+                e.target.classList.remove("active");
+            }
+        });
+
+        // Handle Contact Form Submit
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            alert("Cảm ơn bạn! Yêu cầu hỗ trợ sửa chữa đã được gửi đi thành công. Đội ngũ kỹ sư FixError sẽ liên hệ với bạn trong vòng 15-30 phút.");
+            closeModal('contact');
+            event.target.reset();
+        }
+    </script>
+</body>
+
+</html>
