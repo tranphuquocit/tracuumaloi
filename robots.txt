@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://fixloidienlanh.xyz/sitemap.xml
+Sitemap: https://tracuumaloi.xyz/sitemap.xml
